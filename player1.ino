@@ -27,14 +27,13 @@ void loop() {
   if (total1 >= 150000){
     Keyboard.println("w");
   } 
-  if (total2 >= 10000){
+  if (total2 >= 30000){
     Keyboard.println("s");
   } 
 
   delay(10);
 }
 /*
-
 
 */
 
