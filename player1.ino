@@ -1,91 +1,40 @@
 #include <Bounce.h>
+#include <CapacitiveSensor.h>
+#include <Keyboard.h>
 
 Bounce button9 = Bounce(9, 10);
 Bounce button14 = Bounce(14, 10);
 
+CapacitiveSensor   cs_4_7 = CapacitiveSensor(4,7);        // 10M resistor between pins 4 & 2, pin 2 is sensor pin, add a wire and or foil if desired
+CapacitiveSensor   cs_14_16 = CapacitiveSensor(14,16);        // 10M resistor between pins 4 & 6, pin 6 is sensor pin, add a wire and or foil
+
+
 void setup() {
-  pinMode(9, INPUT_PULLUP);
-  pinMode(14, INPUT_PULLUP);
+  cs_4_7.set_CS_AutocaL_Millis(0xFFFFFFFF);     // turn off autocalibrate on channel 1 - just as an example
+  Serial.begin(9600);
 }
 
 void loop() {
-  button9.update();
-  button14.update();
+  long start = millis();
+  long total1 =  cs_4_7.capacitiveSensor(50);
+  long total2 =  cs_14_16.capacitiveSensor(50);
 
-  if (button9.fallingEdge()) {
+  Serial.print("1 ");
+  Serial.println(total1);
+  Serial.print("2 ");
+  Serial.println(total2);
+
+  if (total1 >= 150000){
     Keyboard.println("w");
-  }
-  if (button14.fallingEdge()) {
+  } 
+  if (total2 >= 10000){
     Keyboard.println("s");
-  }
+  } 
 
-  /*if (button9.risingEdge()) {
-    Keyboard.println("s");
-  }
-  if (button14.risingEdge()) {
-    Keyboard.println("B14 release");
-  }*/
+  delay(10);
 }
 /*
-s
-s
-s
-s
-w
-w
-w
-w
-w
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-w
-w
-w
-w
-w
-w
-w
-w
-w
-w
-w
+
 
 */
 
